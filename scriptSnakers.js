@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function initGame() {
         snake = [{ x: 10, y: 10 }];
-        apple = { x: 15, y: 15 };
+        placeApple();
         score = 0;
         direction = { x: 1, y: 0 };
         scoreElement.textContent = "Pontuação: " + score;
@@ -77,9 +77,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function placeApple() {
-        apple.x = Math.floor(Math.random() * cols);
-        apple.y = Math.floor(Math.random() * rows);
+        apple = {
+            x: Math.floor(Math.random() * cols),
+            y: Math.floor(Math.random() * rows)
+        };
 
+        // Verificar se a maçã não aparece em cima da cobra
         for (let i = 0; i < snake.length; i++) {
             if (snake[i].x === apple.x && snake[i].y === apple.y) {
                 placeApple();
@@ -120,8 +123,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    function handleControlClick(direction) {
-        switch(direction) {
+    function handleControlClick(newDirection) {
+        switch(newDirection) {
             case "left":
                 if (direction.x === 0) {
                     direction = { x: -1, y: 0 };

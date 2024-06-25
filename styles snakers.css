@@ -7,9 +7,10 @@ body {
 }
 
 #game-container {
-    margin: 50px auto;
+    margin: 20px auto;
     padding: 20px;
-    width: 450px;
+    width: 90%;
+    max-width: 450px;
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -18,6 +19,29 @@ body {
 canvas {
     border: 1px solid #000;
     background-color: #eee;
+    display: block;
+    margin: 0 auto;
+}
+
+#controls {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.control-button {
+    padding: 10px;
+    border: none;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 24px;
+}
+
+.control-button:active {
+    background: #555;
 }
 
 #startGame {
