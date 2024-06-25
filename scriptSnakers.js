@@ -3,9 +3,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const ctx = canvas.getContext("2d");
     const scoreElement = document.getElementById("score");
     const startGameButton = document.getElementById("startGame");
+    const controlButtons = {
+        left: document.getElementById("left"),
+        up: document.getElementById("up"),
+        right: document.getElementById("right"),
+        down: document.getElementById("down")
+    };
 
     const gridSize = 20;
-    const canvasSize = 400;
+    const canvasSize = 300;
     const rows = canvasSize / gridSize;
     const cols = canvasSize / gridSize;
 
@@ -19,10 +25,10 @@ document.addEventListener("DOMContentLoaded", function() {
         snake = [{ x: 10, y: 10 }];
         apple = { x: 15, y: 15 };
         score = 0;
-        direction = { x: 1, y: 0 }; // Define uma direção inicial
+        direction = { x: 1, y: 0 };
         scoreElement.textContent = "Pontuação: " + score;
         clearInterval(gameInterval);
-        gameInterval = setInterval(gameLoop, 200); // Ajuste a velocidade do jogo
+        gameInterval = setInterval(gameLoop, 200);
     }
 
     function gameLoop() {
@@ -33,13 +39,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function update() {
         const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
 
-        // Verificar colisões com as paredes
         if (head.x < 0 || head.x >= cols || head.y < 0 || head.y >= rows) {
             gameOver();
             return;
         }
 
-        // Verificar colisões com o próprio corpo
         for (let i = 0; i < snake.length; i++) {
             if (snake[i].x === head.x && snake[i].y === head.y) {
                 gameOver();
@@ -47,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
 
-        // Verificar se a cobra comeu a maçã
         if (head.x === apple.x && head.y === apple.y) {
             score++;
             scoreElement.textContent = "Pontuação: " + score;
@@ -55,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function() {
             placeApple();
         }
 
-        // Mover a cobra
         for (let i = snake.length - 1; i > 0; i--) {
             snake[i] = { ...snake[i - 1] };
         }
@@ -65,13 +67,11 @@ document.addEventListener("DOMContentLoaded", function() {
     function draw() {
         ctx.clearRect(0, 0, canvasSize, canvasSize);
 
-        // Desenhar a cobra
         ctx.fillStyle = "green";
         snake.forEach(part => {
             ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize, gridSize);
         });
 
-        // Desenhar a maçã
         ctx.fillStyle = "red";
         ctx.fillRect(apple.x * gridSize, apple.y * gridSize, gridSize, gridSize);
     }
@@ -80,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function() {
         apple.x = Math.floor(Math.random() * cols);
         apple.y = Math.floor(Math.random() * rows);
 
-        // Verificar se a maçã não aparece em cima da cobra
         for (let i = 0; i < snake.length; i++) {
             if (snake[i].x === apple.x && snake[i].y === apple.y) {
                 placeApple();
@@ -98,22 +97,47 @@ document.addEventListener("DOMContentLoaded", function() {
         const keyPressed = event.keyCode;
 
         switch(keyPressed) {
-            case 37: // Esquerda
+            case 37:
                 if (direction.x === 0) {
                     direction = { x: -1, y: 0 };
                 }
                 break;
-            case 38: // Cima
+            case 38:
                 if (direction.y === 0) {
                     direction = { x: 0, y: -1 };
                 }
                 break;
-            case 39: // Direita
+            case 39:
                 if (direction.x === 0) {
                     direction = { x: 1, y: 0 };
                 }
                 break;
-            case 40: // Baixo
+            case 40:
+                if (direction.y === 0) {
+                    direction = { x: 0, y: 1 };
+                }
+                break;
+        }
+    }
+
+    function handleControlClick(direction) {
+        switch(direction) {
+            case "left":
+                if (direction.x === 0) {
+                    direction = { x: -1, y: 0 };
+                }
+                break;
+            case "up":
+                if (direction.y === 0) {
+                    direction = { x: 0, y: -1 };
+                }
+                break;
+            case "right":
+                if (direction.x === 0) {
+                    direction = { x: 1, y: 0 };
+                }
+                break;
+            case "down":
                 if (direction.y === 0) {
                     direction = { x: 0, y: 1 };
                 }
@@ -124,6 +148,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("keydown", changeDirection);
     startGameButton.addEventListener("click", initGame);
 
-    // Iniciar o jogo ao carregar a página
+    controlButtons.left.addEventListener("click", () => handleControlClick("left"));
+    controlButtons.up.addEventListener("click", () => handleControlClick("up"));
+    controlButtons.right.addEventListener("click", () => handleControlClick("right"));
+    controlButtons.down.addEventListener("click", () => handleControlClick("down"));
+
     initGame();
 });
