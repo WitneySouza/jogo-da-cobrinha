@@ -62,3 +62,9 @@ canvas {
     margin-top: 20px;
     font-size: 18px;
 }
+
+#credit {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}

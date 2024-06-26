@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function() {
         right: document.getElementById("right"),
         down: document.getElementById("down")
     };
+    const eatSound = document.getElementById("eatSound");
+    const gameOverSound = document.getElementById("gameOverSound");
+    const backgroundMusic = document.getElementById("backgroundMusic");
 
     const gridSize = 20;
     const canvasSize = 300;
@@ -28,6 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
         direction = { x: 1, y: 0 };
         scoreElement.textContent = "Pontuação: " + score;
         clearInterval(gameInterval);
+        backgroundMusic.play();  // Inicia a trilha sonora
         gameInterval = setInterval(gameLoop, 200);
     }
 
@@ -55,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
             score++;
             scoreElement.textContent = "Pontuação: " + score;
             snake.push({});
+            eatSound.play(); // Tocar som ao comer a maçã
             placeApple();
         }
 
@@ -93,7 +98,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function gameOver() {
         clearInterval(gameInterval);
-        alert("Game Over! Sua pontuação foi: " + score);
+        backgroundMusic.pause();  // Pausa a trilha sonora
+        backgroundMusic.currentTime = 0;  // Reinicia a trilha sonora
+        gameOverSound.play(); // Tocar som de game over
+
+        gameOverSound.onended = function() {
+            alert("Game Over! Sua pontuação foi: " + score);
+        };
     }
 
     function changeDirection(event) {
