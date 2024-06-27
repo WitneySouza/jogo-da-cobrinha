@@ -68,3 +68,7 @@ canvas {
     font-size: 14px;
     color: #555;
 }
+#ranking-list {
+    text-align: left;
+	margin-left: 160px
+}
