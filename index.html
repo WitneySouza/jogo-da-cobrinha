@@ -4,24 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da Cobrinha</title>
-    <link rel="stylesheet" href="styles snakers.css">
+    <link rel="stylesheet" href="styles_snakers.css">
     <!-- Adicione o SDK do Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <script>
-        // Sua configuração do Firebase aqui
-        var firebaseConfig = {
-			apiKey: "AIzaSyB2BQPPR7UuJDbypzUGEfUMsCe3wIu81m8",
-			authDomain: "jogo-snakers.firebaseapp.com",
-			projectId: "jogo-snakers",
-			storageBucket: "jogo-snakers.appspot.com",
-			messagingSenderId: "749244221684",
-			appId: "1:749244221684:web:e2921763b02b10ff6df6a1",
-			measurementId: "G-7LMMPN30KQ"
-        };
-        // Inicializa o Firebase
-        firebase.initializeApp(firebaseConfig);
-        var db = firebase.firestore();
+        // Inicializa o Firebase após obter a chave de API da função do Netlify
+        fetch('/.netlify/functions/getApiKey')
+            .then(response => response.json())
+            .then(config => {
+                var firebaseConfig = {
+                    apiKey: config.apiKey,
+                    authDomain: "jogo-snakers.firebaseapp.com",
+                    projectId: "jogo-snakers",
+                    storageBucket: "jogo-snakers.appspot.com",
+                    messagingSenderId: "749244221684",
+                    appId: "1:749244221684:web:e2921763b02b10ff6df6a1",
+                    measurementId: "G-7LMMPN30KQ"
+                };
+                firebase.initializeApp(firebaseConfig);
+                var db = firebase.firestore();
+            })
+            .catch(error => console.error('Error fetching API key:', error));
     </script>
 </head>
 <body>
