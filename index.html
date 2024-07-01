@@ -10,7 +10,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <script>
         // Inicializa o Firebase após obter a chave de API da função do Netlify
-        fetch('/.netlify/functions/getApiKey')
+        fetch('/.functions/getApiKey')
             .then(response => response.json())
             .then(config => {
                 var firebaseConfig = {
